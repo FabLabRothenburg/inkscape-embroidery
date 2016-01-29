@@ -243,7 +243,10 @@ class PatchList:
 		self.pointList = []
 		for patch in self.patches:
 			def visit(idx):
-				ep = deepcopy(patch.stitches[idx])
+				try:	
+					ep = deepcopy(patch.stitches[idx])
+				except IndexError:
+					return
 				ep.patch = patch
 				self.centroid+=ep
 				self.pointList.append(ep)
