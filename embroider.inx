@@ -21,6 +21,7 @@
         <_option value="melco">Melco</_option>
         <_option value="csv">Embroidermodder 2 CSV</_option>
         <_option value="gcode">Franklin G-Code</_option>
+        <_option value="vp3">Husquarna Pfaff VP3</_option>
     </param>
     <param name="filename" type="string" _gui-text="File">embroider-output.exp</param>
     <effect>

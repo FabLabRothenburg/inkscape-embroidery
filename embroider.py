@@ -243,7 +243,10 @@ class PatchList:
 		self.pointList = []
 		for patch in self.patches:
 			def visit(idx):
-				ep = deepcopy(patch.stitches[idx])
+				try:	
+					ep = deepcopy(patch.stitches[idx])
+				except IndexError:
+					return
 				ep.patch = patch
 				self.centroid+=ep
 				self.pointList.append(ep)
@@ -421,6 +424,8 @@ class EmbroideryObject:
 			fp.write(emb.export_csv(dbg))
 		elif output_format == "gcode":
 			fp.write(emb.export_gcode(dbg))
+		elif output_format == "vp3":
+			fp.write(emb.export_vp3(dbg))
 		fp.close()
 		emb.scale(pixels_per_millimeter)
 		return emb
@@ -505,7 +510,7 @@ class Embroider(inkex.Effect):
 			help="Add preamble")
 		self.OptionParser.add_option("-O", "--output_format",
 			action="store", type="choice",
-			choices=["melco", "csv", "gcode"],
+			choices=["melco", "csv", "gcode", "vp3"],
 			dest="output_format", default="melco",
 			help="File output format")
 		self.OptionParser.add_option("-F", "--filename",
