@@ -4,6 +4,7 @@
 
 import math
 import sys
+import vp3rw
 
 class Point:
 	def __init__(self, x, y):
@@ -197,6 +198,22 @@ class Embroidery:
 			lastColor = stitch.color
 			lastStitch = stitch
 		return paths
+
+	def export_vp3(self, dbg):
+		vp3o=vp3rw.vp3("inkscape plugin","settings")
+		lastColor=""
+		# for stitch in self.coords[1:]:
+		for stitch in self.coords:
+			if stitch.color!=lastColor:
+				vp3o.setcolor(stitch.color)
+				lastColor=stitch.color
+			p = stitch.as_int()
+			#if stitch.cmd=="m":
+			#	vp3o.lineto(p.x,p.y,1) # long
+			#else:
+			vp3o.lineto(p.x,p.y)
+		return vp3o.flush_str()
+
 
 class Test:
 	def __init__(self):
