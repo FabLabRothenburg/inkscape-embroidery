@@ -42,7 +42,7 @@ import shapely.geometry as shgeo
 import shapely.affinity as affinity
 from pprint import pformat
 
-dbg = open("/tmp/embroider-debug.txt", "w")
+dbg = open("./embroider-debug.txt", "w")
 PyEmb.dbg = dbg
 pixels_per_millimeter = 90.0 / 25.4
 

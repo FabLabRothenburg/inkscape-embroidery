@@ -25,8 +25,16 @@ Linux
 Windows
 -------
 
-Windows users can experience troubles with [shapely] installation. It may be easier to use
-Linux inside the [Virtualbox].
+Windows users can experience troubles with [shapely] installation. Installation may be some tricky
+It may be easier to use Linux inside the [Virtualbox]. If you still want to use Inkscape 
+for Windows try following steps:
+
+1. Install [python](http://python.org). (Windows XP users can use python 2.x version only)
+2. Download shapely for windows with extension library installer from [http://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely].
+   File something like _Shapely-1.5.17-cp27-cp27m-win32.whl_. Install it with pip
+   ````pip install Shapely-1.5.17-cp27-cp27m-win32.whl````
+3. After installation copy directory \Python27\Lib\site-packages\shapely 
+   into \Program Files\Inkscape\Lib\site-packages\shapely. Although Inkscape uses Python2.6 shapely works well.
 
 USAGE
 =====
@@ -39,7 +47,7 @@ corrected embroidery with **svg2emb** module.
 Embroider module
 -----------------
 
-There are 3 types of stitch generation modes.
+There are 3 types of stitch generation modes:
 
 1. Zigzag fill for stroke lines. When stroke width < 0.5pt it geterates just running stitches across
 path edge. When stroke width >= 0.5pt zigzag stitches are generated across such path.
