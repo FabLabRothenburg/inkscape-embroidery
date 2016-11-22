@@ -8,9 +8,13 @@ Linux
 -----
 
 1. Acquire GEOS library by any means. In Ubuntu you can find it in repositories
-  $ apt-get install libgeos-dev
+````bash
+$ apt-get install libgeos-dev
+````
 2. Install [shapely] library into python
-  $ pip install shapely
+````bash
+$ pip install shapely
+````
 3. Copy this extension into ~/.config/inkscape/extensions directory
 
 Windows
@@ -28,10 +32,13 @@ Embroider module
 -----------------
 
 There are 3 types of stitch generation modes.
+
 1. Zigzag fill for stroke lines. When stroke width < 0.5pt it geterates just running stitches across
 path edge. When stroke width >= 0.5pt zigzag stitches are generated across such path.
+
 2. Satin column. If you have two parallel (or not parallel) paths with the same number of points 
 you can create zigzag filled area between these paths. Path must be combined.
+
 3. Filled area generates parallel filling stitches (or zigzag stitches if hatching is enabled) 
 inside filled zones.
 
