@@ -1,13 +1,16 @@
 INKSCAPE EMBROIDERY EXTENSION
 =============================
 
+Inkscape is a natural tool for designing embroidery patterns; the only challenge is converting 
+the Inkscape design to a stitch file. It can be used to design embroidery texts too.
+
 INSTALLATION
 ============
 
 Linux
 -----
 
-1. Acquire GEOS library by any means. In Ubuntu you can find it in repositories
+1. Acquire GEOS library by any means. In Ubuntu you can find it in repositories.
 
    ````bash
    $ apt-get install libgeos-dev
@@ -22,11 +25,14 @@ Linux
 Windows
 -------
 
+Windows users can experience troubles with [shapely] installation. It may be easier to use
+Linux inside the [Virtualbox].
+
 USAGE
 =====
 
-Create vector image by any means (draw yourself, vectorize raster image, download etc). Prepare
-every element of image with **Params** module. Set needed generation sequense with **Reorder**
+Create svg drawing by any means (draw yourself, vectorize raster image, download etc). Prepare
+every element of the image with **Params** module. Set needed generation sequense with **Reorder**
 module. Generate stitches with **Embroider** module. Correct stitches if needed. Regenerate
 corrected embroidery with **svg2emb** module.
 
@@ -72,3 +78,4 @@ needed machine format with **libembroidery-convert** wich is the part of [Embroi
 
 [Embroidermodder]: https://github.com/Embroidermodder/Embroidermodder
 [shapely]: https://pypi.python.org/pypi/Shapely
+[Virtualbox]: https://www.virtualbox.org/
