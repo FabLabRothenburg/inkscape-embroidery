@@ -8,13 +8,13 @@ Linux
 -----
 
 1. Acquire GEOS library by any means. In Ubuntu you can find it in repositories
-````bash
-$ apt-get install libgeos-dev
-````
+   ````bash
+   $ apt-get install libgeos-dev
+   ````
 2. Install [shapely] library into python
-````bash
-$ pip install shapely
-````
+   ````bash
+   $ pip install shapely
+   ````
 3. Copy this extension into ~/.config/inkscape/extensions directory
 
 Windows
