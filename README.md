@@ -23,6 +23,7 @@ Make sure you have the `shapely` python module installed.  The `appdirs` python 
 
 ```
 apt-get install python-shapely python-appdirs
+pip install backports.functools_lru_cache
 ```
 
 ### Extension installation
@@ -166,7 +167,7 @@ Satin Column mode gives you much greater control over how the satin is generated
 
 The two paths must have the same number of points.  This means that each path will be made up of an equal number of Bezier curves.  Each pair of points acts as a "checkpoint": **Embroider** will ensure that a "zag" ends up going from one point to the other.
 
-**Embroider** considers each pair of Bezier curves, one at a time.  It picks the longest if the two and determines how many zig-zags will be necessary to satisfy the **zig-zag spacing** setting.  This makes it so that the outside of a curve will never have sparse stitching like with simple satin.  
+**Embroider** considers each pair of Bezier curves, one at a time.  It picks the longest if the two and determines how many zig-zags will be necessary to satisfy the **zig-zag spacing** setting.  This makes it so that the outside of a curve will never have sparse stitching like with simple satin.
 
 However, this does mean that the inside of a curve will have a higher stitch density than you specified.  Be careful how you design sharp curves, because **stitching at too high a density may poke a hole in the fabric**!
 

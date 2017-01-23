@@ -40,7 +40,7 @@ import shapely.ops
 from pprint import pformat
 
 import PyEmb
-#from PyEmb import cache
+from PyEmb import cache
 
 dbg = open("./embroider-debug.txt", "w")
 PyEmb.dbg = dbg
@@ -96,7 +96,7 @@ class EmbroideryElement(object):
 
         return params
 
-    #@cache
+    @cache
     def get_param(self, param, default):
         value = self.node.get("embroider_" + param, "").strip()
 
@@ -105,7 +105,7 @@ class EmbroideryElement(object):
 
         return value
 
-    #@cache
+    @cache
     def get_boolean_param(self, param, default=None):
         value = self.get_param(param, default)
 
@@ -114,7 +114,7 @@ class EmbroideryElement(object):
         else:
             return value and (value.lower() in ('yes', 'y', 'true', 't', '1'))
 
-    #@cache
+    @cache
     def get_float_param(self, param, default=None):
         try:
             value = float(self.get_param(param, default))
@@ -127,7 +127,7 @@ class EmbroideryElement(object):
 
         return value
 
-    #@cache
+    @cache
     def get_int_param(self, param, default=None):
         try:
             value = int(self.get_param(param, default))
@@ -142,7 +142,7 @@ class EmbroideryElement(object):
     def set_param(self, name, value):
         self.node.set("embroider_%s" % name, str(value))
 
-    #@cache
+    @cache
     def get_style(self, style_name):
         style = simplestyle.parseStyle(self.node.get("style"))
         if (style_name not in style):
@@ -152,12 +152,12 @@ class EmbroideryElement(object):
             return None
         return value
 
-    #@cache
+    @cache
     def has_style(self, style_name):
         style = simplestyle.parseStyle(self.node.get("style"))
         return style_name in style
 
-    #@cache
+    @cache
     def parse_path(self):
         # A CSP is a  "cubic superpath".
         #
@@ -237,7 +237,7 @@ class Fill(EmbroideryElement):
 
     @property
     @param('angle', 'Angle of lines of stitches', unit='deg', type='float')
-    #@cache
+    @cache
     def angle(self):
         return math.radians(self.get_float_param('angle', 0))
 
@@ -266,12 +266,12 @@ class Fill(EmbroideryElement):
         return self.get_int_param("staggers", 4)
 
     @property
-    #@cache
+    @cache
     def paths(self):
         return self.flatten(self.parse_path())
 
     @property
-    #@cache
+    @cache
     def shape(self):
         poly_ary = []
         for sub_path in self.paths:
@@ -300,12 +300,12 @@ class Fill(EmbroideryElement):
         # print >> sys.stderr, "polygon valid:", polygon.is_valid
         return polygon
 
-    #@cache
+    @cache
     def east(self, angle):
         # "east" is the name of the direction that is to the right along a row
         return PyEmb.Point(1, 0).rotate(-angle)
 
-    #@cache
+    @cache
     def north(self, angle):
         return self.east(angle).rotate(math.pi / 2)
 
@@ -528,12 +528,12 @@ class AutoFill(Fill):
         return self.get_boolean_param('auto_fill', True)
 
     @property
-    #@cache
+    @cache
     def outline(self):
         return self.shape.boundary[0]
 
     @property
-    #@cache
+    @cache
     def outline_length(self):
         return self.outline.length
 
@@ -553,7 +553,7 @@ class AutoFill(Fill):
 
     @property
     @param('fill_underlay_angle', 'Fill angle (default: fill angle + 90 deg)', unit='deg', group='AutoFill Underlay', type='float')
-    #@cache
+    @cache
     def fill_underlay_angle(self):
         underlay_angle = self.get_float_param("fill_underlay_angle")
 
@@ -564,13 +564,13 @@ class AutoFill(Fill):
 
     @property
     @param('fill_underlay_row_spacing_mm', 'Row spacing (default: 3x fill row spacing)', unit='mm', group='AutoFill Underlay', type='float')
-    #@cache
+    @cache
     def fill_underlay_row_spacing(self):
         return self.get_float_param("fill_underlay_row_spacing_mm") or self.row_spacing * 3
 
     @property
     @param('fill_underlay_max_stitch_length_mm', 'Max stitch length', unit='mm', group='AutoFill Underlay', type='float')
-    #@cache
+    @cache
     def fill_underlay_max_stitch_length(self):
         return self.get_float_param("fill_underlay_max_stitch_length_mm" or self.max_stitch_length)
 
@@ -710,7 +710,7 @@ class SergFill(EmbroideryElement):
 
     @property
     @param('angle', 'Angle of lines of stitches', unit='deg', type='float')
-    #@cache
+    @cache
     def angle(self):
         return math.radians(self.get_float_param('angle', 0))
 
@@ -739,12 +739,12 @@ class SergFill(EmbroideryElement):
         return self.get_int_param("staggers", 4)
 
     @property
-    #@cache
+    @cache
     def paths(self):
         return self.flatten(self.parse_path())
 
     @property
-    #@cache
+    @cache
     def shape(self):
         poly_ary = []
         for sub_path in self.paths:
@@ -773,12 +773,12 @@ class SergFill(EmbroideryElement):
         # print >> sys.stderr, "polygon valid:", polygon.is_valid
         return polygon
 
-    #@cache
+    @cache
     def east(self, angle):
         # "east" is the name of the direction that is to the right along a row
         return PyEmb.Point(1, 0).rotate(-angle)
 
-    #@cache
+    @cache
     def north(self, angle):
         return self.east(angle).rotate(math.pi / 2)
 
@@ -910,15 +910,15 @@ class SergFill(EmbroideryElement):
     def pull_runs(self, rows):
         #remake: splitting into runs
         #each run should not be enclosed by any other one
-        #all runs can figure out their neighbours up and down 
+        #all runs can figure out their neighbours up and down
         #thus we can determine right sequence for jump stitches
         #which connect runs to avoid going through already filled area
         #Sequence detection algorithm:
         #run can be filled starting from side where it has no neighbours (top or bottom)
         #after being filled the run is eliminated from list
         #Shape detection algorithm
-        #scan each segment of current row agains all previous row segments and 
-        #each segment of previous row against all segments of current row 
+        #scan each segment of current row agains all previous row segments and
+        #each segment of previous row against all segments of current row
         #if adjacent_count == 1: append this segment to shape
         #if adjacent_count == 0: start new run
         #if adjacent_count >1: start new run (obstacle detected)
@@ -998,9 +998,9 @@ class SergFill(EmbroideryElement):
             if (direction == 'up'):   #if prelast was filled from bottom last will bee the same
                 runs[0].reverse()
             orderedruns.append(runs[0])
-            
+
             return orderedruns
-            
+
         else:
             return runs
 
@@ -1103,7 +1103,7 @@ class Stroke(EmbroideryElement):
         return self.get_style("stroke")
 
     @property
-    #@cache
+    @cache
     def width(self):
         stroke_width = self.get_style("stroke-width")
 
@@ -1123,7 +1123,7 @@ class Stroke(EmbroideryElement):
 
     @property
     @param('zigzag_spacing_mm', 'Zig-zag spacing (peak-to-peak)', unit='mm', type='float')
-    #@cache
+    @cache
     def zigzag_spacing(self):
         return self.get_float_param("zigzag_spacing_mm")
 
@@ -1295,12 +1295,12 @@ class SatinColumn(EmbroideryElement):
         return self.get_float_param("zigzag_underlay_inset_mm") or self.contour_underlay_inset / 2.0
 
     @property
-    #@cache
+    @cache
     def csp(self):
         return self.parse_path()
 
     @property
-    #@cache
+    @cache
     def flattened_beziers(self):
         # Given a pair of paths made up of bezier segments, flatten
         # each individual bezier segment into line segments that approximate
